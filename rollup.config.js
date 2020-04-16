@@ -1,6 +1,7 @@
 import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import scss from 'rollup-plugin-scss';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
 import config from './svelte.config'
@@ -16,6 +17,8 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
+		scss(),
+
 		svelte(config),
 
 		// If you have external dependencies installed from
