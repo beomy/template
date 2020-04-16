@@ -1,6 +1,7 @@
 import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import typescript from 'rollup-plugin-typescript';
 import scss from 'rollup-plugin-scss';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
@@ -9,7 +10,7 @@ import config from './svelte.config'
 const production = !process.env.ROLLUP_WATCH;
 
 export default {
-	input: 'src/main.js',
+	input: 'src/main.ts',
 	output: {
 		sourcemap: true,
 		format: 'iife',
@@ -17,6 +18,8 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
+		typescript(),
+
 		scss(),
 
 		svelte(config),

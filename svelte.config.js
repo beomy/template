@@ -5,6 +5,9 @@ const production = !process.env.ROLLUP_WATCH;
 export default {
   preprocess: sveltePreprocess({
     // ...svelte-preprocess options
+    typescript: {
+      tsconfigFile: './tsconfig.json'
+    }
   }),
   // ...other svelte options
   // enable run-time checks when not in production
