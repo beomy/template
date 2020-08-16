@@ -6,6 +6,8 @@ import { terser } from 'rollup-plugin-terser';
 import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
 import scss from 'rollup-plugin-scss';
+import alias from '@rollup/plugin-alias';
+import path from 'path';
 
 const production = !process.env.ROLLUP_WATCH;
 
@@ -63,6 +65,11 @@ export default {
 		typescript({ sourceMap: !production }),
 		scss({
 			output: 'public/build/assets.css'
+		}),
+		alias({
+			entries: [
+				{ find: '@', replacement: path.resolve(__dirname, 'src') }
+			]
 		}),
 
 		// In dev mode, call `npm run start` once
