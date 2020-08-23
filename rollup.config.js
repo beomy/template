@@ -3,9 +3,9 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
-import sveltePreprocess from 'svelte-preprocess';
 import typescript from '@rollup/plugin-typescript';
 import scss from 'rollup-plugin-scss';
+import postcss from 'rollup-plugin-postcss';
 import alias from '@rollup/plugin-alias';
 import path from 'path';
 
@@ -41,16 +41,7 @@ export default {
 		file: 'public/build/bundle.js'
 	},
 	plugins: [
-		svelte({
-			// enable run-time checks when not in production
-			dev: !production,
-			// we'll extract any component CSS out into
-			// a separate file - better for performance
-			css: css => {
-				css.write('public/build/bundle.css');
-			},
-			preprocess: sveltePreprocess(),
-		}),
+		svelte(require('./svelte.config')),
 
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
@@ -66,11 +57,14 @@ export default {
 		scss({
 			output: 'public/build/assets.css'
 		}),
-		alias({
-			entries: [
-				{ find: '@', replacement: path.resolve(__dirname, 'src') }
-			]
+		postcss({
+      plugins: [require('autoprefixer'),]
 		}),
+		alias({
+      entries: [
+        { find: '@', replacement: path.resolve(__dirname, 'src') }
+      ]
+    }),
 
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated
